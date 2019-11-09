@@ -192,21 +192,18 @@ cat > ${_cfg_file} <<-EOF
 		}
 	],
 	"routing": {
-		"strategy": "rules",
-		"settings": {
-			"rules": [
-				{
-					"type": "field",
-					"ip": ["geoip:private"],
-					"outboundTag": "blocked"
-				},
-				{
-					"type": "field",
-					"protocol": ["bittorrent"],
-					"outboundTag": "blocked"
-				}
-			]
-		}
+		"rules": [
+			{
+				"type": "field",
+				"ip": ["geoip:private"],
+				"outboundTag": "blocked"
+			},
+			{
+				"type": "field",
+				"protocol": ["bittorrent"],
+				"outboundTag": "blocked"
+			}
+		]
 	}
 }
 EOF
