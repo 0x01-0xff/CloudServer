@@ -14,7 +14,7 @@ SAVE_CONFIG_FILE="${CUR_DIR}/save_uuid.txt"
 INSTALL_ACTION="$1"
 ############################################
 V2RAY_BIN_PATH="/usr/bin/v2ray"
-V2RAT_CFG_FILE="/etc/v2ray/config.json"
+V2RAY_CFG_FILE="/etc/v2ray/config.json"
 CADDY_BIN_PATH="/usr/local/bin"
 CADDY_CFG_PATH="/etc/caddy"
 CADDY_CERT_PATH="/etc/ssl/caddy"
@@ -89,6 +89,8 @@ install_caddy() {
 	chmod 555 ${CADDY_WWW_PATH}
 	echo "inset caddy service"
 	cp ${CUR_DIR}/caddy.service /etc/systemd/system/caddy.service
+	#ReadWritePaths=/etc/ssl/caddy
+	#ReadWriteDirectories=/etc/ssl/caddy
 	chmod 644 /etc/systemd/system/caddy.service
 
 	systemctl daemon-reload
