@@ -24,6 +24,7 @@ _red()    { printf '\033[1;31;31m'; printf "$@"; printf '\033[0m'; }
 _yellow() { printf '\033[1;31;33m'; printf "$@"; printf '\033[0m'; }
 _green()  { printf '\033[1;31;32m'; printf "$@"; printf '\033[0m'; }
 [[ $EUID -ne 0 ]] && _red "\nError: This script must be run as root!\n" && exit 1
+RELEASE_VERSION=`cat /etc/redhat-release|sed -r 's/.* ([0-9]+)\..*/\1/'`
 
 set_server_time(){
 	_green "Set Server Time\n"
@@ -89,8 +90,10 @@ install_caddy() {
 	chmod 555 ${CADDY_WWW_PATH}
 	echo "inset caddy service"
 	cp ${CUR_DIR}/caddy.service /etc/systemd/system/caddy.service
-	#ReadWritePaths=/etc/ssl/caddy
-	#ReadWriteDirectories=/etc/ssl/caddy
+	if [[ $RELEASE_VERSION -lt 8 ]]; then
+		_yellow "CentOS $RELEASE_VERSION detected, fix \"caddy.service\" file\n"
+		sed -i 's/^ReadWritePaths=\/etc\/ssl\/caddy/ReadWriteDirectories=\/etc\/ssl\/caddy/g' /etc/systemd/system/caddy.service
+	fi
 	chmod 644 /etc/systemd/system/caddy.service
 
 	systemctl daemon-reload
