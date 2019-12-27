@@ -1,17 +1,11 @@
 #!/bin/bash
-# v2ray ws+tls+web installer for centos 7/8 x64
-# Make sure your domain name resolution done
-# "grep '36' /etc/group" to check the user id is usable
-# USE: "# sh install_v2s.sh time/pkg/v2s"
+# Modify Domain Name Of v2ray+caddy [ws+tls+web]
+# Make sure your new domain name resolution done
+# USE: "# sh v2s_mod_domain.sh xxxx.com"
 #
-DOMAIN_NAME="xxx.com"
-UUID_USERS=6
-V2RAY_LISTEN_PORT="33333"
-SECURE_PATH="$(< /dev/urandom tr -dc a-z0-9 | head -c 8)"
-WEB_USER_ID="36"
+
+DOMAIN_NAME="$1"
 CUR_DIR=$(cd "$(dirname "$0")";pwd)
-SAVE_CONFIG_FILE="${CUR_DIR}/save_uuid.txt"
-INSTALL_ACTION="$1"
 ############################################
 V2RAY_BIN_PATH="/usr/bin/v2ray"
 V2RAY_CFG_FILE="/etc/v2ray/config.json"
@@ -19,7 +13,6 @@ CADDY_BIN_PATH="/usr/local/bin"
 CADDY_CFG_PATH="/etc/caddy"
 CADDY_CERT_PATH="/etc/ssl/caddy"
 CADDY_WWW_PATH="/var/www"
-CADDY_ERR_PATH="${CADDY_WWW_PATH}/err_html"
 _red()    { printf '\033[1;31;31m'; printf "$@"; printf '\033[0m'; }
 _yellow() { printf '\033[1;31;33m'; printf "$@"; printf '\033[0m'; }
 _green()  { printf '\033[1;31;32m'; printf "$@"; printf '\033[0m'; }
